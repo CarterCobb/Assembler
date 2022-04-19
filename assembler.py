@@ -35,16 +35,9 @@ with open(path, 'r') as file:
             )
         )
 
-# Encode binary into hex then to a .img file
-encode = ''
-for binary in [item['binary'] for item in parsed_mnemonics]:
-    encode += ''.join(re.findall('..',
-                                 ''.join(
-                                     [hex(int(b, 2)).replace('0x', '')
-                                      for b in re.findall('....', binary)]
-                                 ))[::-1])
+encode = ''.join([h['encode'] for h in parsed_mnemonics])
 
-# Save to kernel7.img
+# Encode binary into hex then to kernel7.img file
 with open('kernel7.img', 'wb') as file:
     integers = []
     while encode:
