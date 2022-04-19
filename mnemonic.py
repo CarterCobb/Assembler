@@ -1,4 +1,7 @@
 
+import re
+
+
 class Mnemonic:
 
     def __init__(self):
@@ -55,8 +58,12 @@ class Mnemonic:
             imm = self._split_16_bit(mnemonic[2].replace('0x', ''))
             rd = self._ensure_bits(mnemonic[1].replace('R', ''), 4)
             imm4, imm12 = imm[0], imm[1]
+            binary = f'{cond}{op}{imm4}{rd}{imm12}'
+            hex_conversion = self._bits_to_hex(binary)
             return {
-                'binary': f'{cond}{op}{imm4}{rd}{imm12}',
+                'binary': binary,
+                'hex': hex_conversion[0],
+                'encode': hex_conversion[1],
                 'cond_code': mov_cond_code,
                 's': False,  # MOVT & MOVW cannot have an 's' bit
                 'op_code': mnemonic_action[0:4],
@@ -88,9 +95,13 @@ class Mnemonic:
                 rd = self._ensure_bits(mnemonic[1].replace('R', ''), 4)
                 rn = self._ensure_bits(mnemonic[2].replace('R', ''), 4)
                 imm = self._hex_to_binary_safe(mnemonic[3])
-                binary = self._pad_zeros(f"{cond}00{i}{op}{'1' if s else '0'}{rn}{rd}", imm)
+                binary = self._pad_zeros(
+                    f"{cond}00{i}{op}{'1' if s else '0'}{rn}{rd}", imm)
+        hex_conversion = self._bits_to_hex(binary)
         return {
             'binary': binary,
+            'hex': hex_conversion[0],
+            'encode': hex_conversion[1],
             'cond_code': cond_code,
             's': s,
             'op_code': op_code,
@@ -113,3 +124,8 @@ class Mnemonic:
         num_zeros = 32 - (len(front) + len(proposed))
         zeros_str = '0' * num_zeros
         return f'{front}{zeros_str}{proposed}'
+
+    def _bits_to_hex(self, binary):
+        binary_to_hex = [hex(int(b, 2)).replace('0x', '')
+                         for b in re.findall('....', binary)]
+        return (''.join(re.findall('..', ''.join(binary_to_hex))), ''.join(re.findall('..', ''.join(binary_to_hex[::-1]))))
