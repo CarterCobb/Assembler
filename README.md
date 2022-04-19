@@ -31,6 +31,10 @@ The assembler is capable of more. It follows dynamic rules to parse the commands
 
 `<op_code><cond_code><s?> <rd?>, <rn?>, <hex value up to 3 bytes>`
 
+### Example
+
+`SUBS R5, R5 0x1`
+
 Rules:
 
 - `<>` means descriptive item; dont include the angle brackets
@@ -43,7 +47,7 @@ Help:
 - `op_code` = the opperation to execute. e.g `ADD`
 - `cond_code` = the condition code. e.g `PL`. Defaults to `AL` if not specified
 - `s` = the s bit when applicable. Defaults to `0` if not specified
-- `rd` = desination register
+- `rd` = destination register
 - `rn` = orign register
 - `hex value` = a hex value up to 3 bytes e.g. 0xFFFFFF (some commands max at 1-2 bytes)
 
