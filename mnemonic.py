@@ -72,7 +72,7 @@ class Mnemonic:
             op = self._ensure_bits(self.op_codes.get(mnemonic_action[0:3]), 8)
             rd = self._ensure_bits(mnemonic[1].replace('R', ''), 4)
             rn = self._ensure_bits(mnemonic[2].replace('R', ''), 4)
-            binary = f'{cond}{op}{rn}{rd}000000000100'
+            binary = f'{cond}{op}{rn}{rd}000000000000'
         elif op_code == 'B':
             branch_back = self._hex_to_binary_safe(mnemonic[1])
             binary = self._pad_zeros(f'{cond}1010', branch_back)
