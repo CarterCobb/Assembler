@@ -1,6 +1,6 @@
 # Dynamic Assembler
 
-This assebler is writed in python. It takes common assembly commands and creates a `kernel7.img` that can be run on a [raspberry pi](https://www.raspberrypi.com/). This assembler has more potential as is collects and stores more data than is used to create that file.
+This assembler is writed in python. It takes common assembly commands and creates a `kernel7.img` that can be run on a [raspberry pi](https://www.raspberrypi.com/). This assembler has more potential as is collects and stores more data than is used to create that file.
 
 ## Supported Opperation Codes
 
@@ -33,7 +33,7 @@ The assembler is capable of more. It follows dynamic rules to parse the commands
 
 Rules:
 
-- `<>` means descriptive item
+- `<>` means descriptive item; dont include the angle brackets
 - `?` means the item is optional
 - Spaces are mandatory
 - Commas are not mandatory
@@ -62,38 +62,38 @@ Saved to kernel7.img
 -----Parsed Data-----
 {'binary': '11100011000000000100000000000000', 'cond_code': 'AL', 's': False, 'op_code': 'MOVW', 'assembly': 'MOVW R4 0x0'}
 {'binary': '11100011010000110100111100100000', 'cond_code': 'AL', 's': False, 'op_code': 'MOVT', 'assembly': 'MOVT R4 0x3F20'}
-{'binary': '11100010100001000010000000001000', 'cond_code': 'AL', 's': False, 'op_code': 'ADD', 'assembly': 'ADD R2 R4 0x08'}
-{'binary': '11100100000100100011000000000000', 'cond_code': 'AL', 's': False, 'op_code': 'LDR', 'assembly': 'LDR R3 R2'}
-{'binary': '11100011100000110011000000001000', 'cond_code': 'AL', 's': False, 'op_code': 'ORR', 'assembly': 'ORR R3 R3 0x000008'}
-{'binary': '11100100000000100011000000000000', 'cond_code': 'AL', 's': False, 'op_code': 'STR', 'assembly': 'STR R3 R2'}
-{'binary': '11100010100001000011000000011100', 'cond_code': 'AL', 's': False, 'op_code': 'ADD', 'assembly': 'ADD R3 R4 0x1c'}
+{'binary': '11100010100001000010000000001000', 'cond_code': 'AL', 's': False, 'op_code': 'ADD',  'assembly': 'ADD R2 R4 0x08'}
+{'binary': '11100100000100100011000000000000', 'cond_code': 'AL', 's': False, 'op_code': 'LDR',  'assembly': 'LDR R3 R2'}
+{'binary': '11100011100000110011000000001000', 'cond_code': 'AL', 's': False, 'op_code': 'ORR',  'assembly': 'ORR R3 R3 0x000008'}
+{'binary': '11100100000000100011000000000000', 'cond_code': 'AL', 's': False, 'op_code': 'STR',  'assembly': 'STR R3 R2'}
+{'binary': '11100010100001000011000000011100', 'cond_code': 'AL', 's': False, 'op_code': 'ADD',  'assembly': 'ADD R3 R4 0x1c'}
 {'binary': '11100011000000000010000000000000', 'cond_code': 'AL', 's': False, 'op_code': 'MOVW', 'assembly': 'MOVW R2 0x0000'}
 {'binary': '11100011010000000010000000100000', 'cond_code': 'AL', 's': False, 'op_code': 'MOVT', 'assembly': 'MOVT R2 0x0020'}
-{'binary': '11100100000000110010000000000000', 'cond_code': 'AL', 's': False, 'op_code': 'STR', 'assembly': 'STR R2 R3'}
+{'binary': '11100100000000110010000000000000', 'cond_code': 'AL', 's': False, 'op_code': 'STR',  'assembly': 'STR R2 R3'}
 {'binary': '11100011000001000101001001000000', 'cond_code': 'AL', 's': False, 'op_code': 'MOVW', 'assembly': 'MOVW R5 0x4240'}
 {'binary': '11100011010000000101000000001111', 'cond_code': 'AL', 's': False, 'op_code': 'MOVT', 'assembly': 'MOVT R5 0x000F'}
-{'binary': '11100010010101010101000000000001', 'cond_code': 'AL', 's': True, 'op_code': 'SUB', 'assembly': 'SUBS R5 R5 0x1'}
-{'binary': '01011010111111111111111111111101', 'cond_code': 'PL', 's': False, 'op_code': 'B', 'assembly': 'BPL 0xFFFFFD'}
-{'binary': '11100010100001000011000000101000', 'cond_code': 'AL', 's': False, 'op_code': 'ADD', 'assembly': 'ADD R3 R4 0x28'}
+{'binary': '11100010010101010101000000000001', 'cond_code': 'AL', 's': True,  'op_code': 'SUB',  'assembly': 'SUBS R5 R5 0x1'}
+{'binary': '01011010111111111111111111111101', 'cond_code': 'PL', 's': False, 'op_code': 'B',    'assembly': 'BPL 0xFFFFFD'}
+{'binary': '11100010100001000011000000101000', 'cond_code': 'AL', 's': False, 'op_code': 'ADD',  'assembly': 'ADD R3 R4 0x28'}
 {'binary': '11100011000000000010000000000000', 'cond_code': 'AL', 's': False, 'op_code': 'MOVW', 'assembly': 'MOVW R2 0x0000'}
 {'binary': '11100011010000000010000000100000', 'cond_code': 'AL', 's': False, 'op_code': 'MOVT', 'assembly': 'MOVT R2 0x0020'}
-{'binary': '11100100000000110010000000000000', 'cond_code': 'AL', 's': False, 'op_code': 'STR', 'assembly': 'STR R2 R3'}
+{'binary': '11100100000000110010000000000000', 'cond_code': 'AL', 's': False, 'op_code': 'STR',  'assembly': 'STR R2 R3'}
 {'binary': '11100011000001000101001001000000', 'cond_code': 'AL', 's': False, 'op_code': 'MOVW', 'assembly': 'MOVW R5 0x4240'}
 {'binary': '11100011010000000101000000001111', 'cond_code': 'AL', 's': False, 'op_code': 'MOVT', 'assembly': 'MOVT R5 0x000F'}
-{'binary': '11100010010101010101000000000001', 'cond_code': 'AL', 's': True, 'op_code': 'SUB', 'assembly': 'SUBS R5 R5 0x1'}
-{'binary': '01011010111111111111111111111101', 'cond_code': 'PL', 's': False, 'op_code': 'B', 'assembly': 'BPL 0xFFFFFD'}
-{'binary': '11101010111111111111111111101110', 'cond_code': 'AL', 's': False, 'op_code': 'B', 'assembly': 'B 0xFFFFEE'}
+{'binary': '11100010010101010101000000000001', 'cond_code': 'AL', 's': True,  'op_code': 'SUB',  'assembly': 'SUBS R5 R5 0x1'}
+{'binary': '01011010111111111111111111111101', 'cond_code': 'PL', 's': False, 'op_code': 'B',    'assembly': 'BPL 0xFFFFFD'}
+{'binary': '11101010111111111111111111101110', 'cond_code': 'AL', 's': False, 'op_code': 'B',    'assembly': 'B 0xFFFFEE'}
 ```
 
 ## Example Assembly File
 
-For testing purposes and proof of concept, an assemly command file is provided in this repo. It can be found [here](https://github.com/CarterCobb/Assembler/blob/master/assembly.txt).
+For testing purposes and proof of concept, an assembly command file is provided in this repo. It can be found [here](https://github.com/CarterCobb/Assembler/blob/master/assembly.txt).
 
 This assembly will create output on the 21st GPIO pin on a raspberry pi and blink an LED bulb connected to that with a resistor.
 
 ## Roadmap
 
-Currenlty this parser does not support register values pared with opperations. It currenlty only will handle immediate values. A plan to add register support is in place.
+Currently this parser does not support register values pared with opperations. It currenlty only will handle immediate values. A plan to add register support is in place.
 
 ## Additional Details
 
