@@ -126,6 +126,5 @@ class Mnemonic:
         return f'{front}{zeros_str}{proposed}'
 
     def _bits_to_hex(self, binary):
-        binary_to_hex = [hex(int(b, 2)).replace('0x', '')
-                         for b in re.findall('....', binary)]
-        return (''.join(re.findall('..', ''.join(binary_to_hex))), ''.join(re.findall('..', ''.join(binary_to_hex[::-1]))))
+        binary_to_hex = [hex(int(b, 2)).replace('0x', '') for b in re.findall('....', binary)]
+        return (''.join(re.findall('..', ''.join(binary_to_hex))), ''.join(re.findall('..', ''.join(binary_to_hex))[::-1]))
