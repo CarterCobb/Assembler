@@ -51,7 +51,7 @@ class Mnemonic:
     def parse_mnemonic(self, mnemonic):
         mnemonic_action = mnemonic[0]
         m_len = len(mnemonic_action)
-        if (m_len in [4, 6]) and 'MOV' in mnemonic_action:
+        if (m_len in [4, 6, 7]) and 'MOV' in mnemonic_action:
             mov_cond_code = mnemonic_action[-2:] if m_len == 6 else 'AL'
             cond = self._ensure_bits(self.condition_codes[mov_cond_code], 4)
             op = self._ensure_bits(self.mov_large.get(mnemonic_action[0:4]), 8)
