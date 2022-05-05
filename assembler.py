@@ -1,3 +1,4 @@
+import json
 from mnemonic import Mnemonic
 import re
 
@@ -29,11 +30,12 @@ parsed_mnemonics = []
 # Read and parse file
 with open(path, 'r') as file:
     for line in [i for i in file.readlines() if i]:
-        parsed_mnemonics.append(
-            mnemonic_dictionary.parse_mnemonic(
-                [i.strip(',\n ()') for i in line.split(' ')]
+        if line is not None and not line.isspace():
+            parsed_mnemonics.append(
+                mnemonic_dictionary.parse_mnemonic(
+                    [i.strip(',\n ()') for i in line.split(' ')]
+                )
             )
-        )
 
 encode = ''.join([h['encode'] for h in parsed_mnemonics])
 
