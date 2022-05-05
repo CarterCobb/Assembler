@@ -99,6 +99,8 @@ This assembly will create output on the 21st GPIO pin on a raspberry pi and blin
 
 Currently this parser does not support register values pared with opperations. It currenlty only will handle immediate values. A plan to add register support is in place.
 
+See the [develpemnt branch](https://github.com/CarterCobb/Assembler/tree/development) for features currently being added.
+
 ## Additional Details
 
 This was built as an assignment for a college class at [Neumont College of Computer Science](https://www.neumont.edu/). Please do not use any part of this project in any way that would be considered plagiarism.
