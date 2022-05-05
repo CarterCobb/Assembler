@@ -1,4 +1,3 @@
-import json
 from mnemonic import Mnemonic
 import re
 
@@ -25,17 +24,14 @@ Help:
 
 path = input("Enter a path to a command file:\r\n-> ")
 mnemonic_dictionary = Mnemonic()
-parsed_mnemonics = []
+lines = []
 
 # Read and parse file
 with open(path, 'r') as file:
     for line in [i for i in file.readlines() if i]:
-        if line is not None and not line.isspace():
-            parsed_mnemonics.append(
-                mnemonic_dictionary.parse_mnemonic(
-                    [i.strip(',\n ()') for i in line.split(' ')]
-                )
-            )
+        if line is not None and not line.isspace(): lines.append(re.sub('\,|\\n|\(|\)', '', line))
+
+parsed_mnemonics = [mnemonic_dictionary.parse_mnemonic(lines[i].split(' '), lines, i) for i in range(len(lines) - 1)]
 
 encode = ''.join([h['encode'] for h in parsed_mnemonics])
 
