@@ -24,7 +24,9 @@ class Mnemonic:
             'MVN': 0b1111,
             'B': 0b1010,
             'LDR': 0b01000001,
-            'STR': 0b01000000
+            'STR': 0b01000000,
+            'LDM': 0b100010, # W1
+            # 'STM': 0b
         }
         self.mov_large = {
             'MOVW': 0b00110000,
@@ -46,6 +48,10 @@ class Mnemonic:
             'GT': 0b1100,
             'LE': 0b1101,
             'AL': 0b1110
+        }
+        self.b_op_codes = {
+            'L': 0b1011,
+            'X': 0b0001
         }
 
     def parse_mnemonic(self, mnemonic):
@@ -81,8 +87,15 @@ class Mnemonic:
             rn = self._ensure_bits(mnemonic[2].replace('R', ''), 4)
             binary = f'{cond}{op}{rn}{rd}000000000000'
         elif op_code == 'B':
-            branch_back = self._hex_to_binary_safe(mnemonic[1])
-            binary = self._pad_zeros(f'{cond}1010', branch_back)
+            if m_len == 2:
+                op = self._ensure_bits(self.b_op_codes.get(mnemonic_action[1:2]), 4)
+                if ':' in mnemonic[1]: pass # TODO: subrunine label
+                else:
+                    rn = self._ensure_bits(mnemonic[1].replace('R', ''), 4)
+                    binary = f'{cond}{op}00101111111111110001{rn}'
+            else:
+                branch_back = self._hex_to_binary_safe(mnemonic[1])
+                binary = self._pad_zeros(f'{cond}1010', branch_back)
         else:
             s_arr = [2, 3, 4, 5, 7]
             op = self._ensure_bits(self.op_codes.get(op_code), 4)
