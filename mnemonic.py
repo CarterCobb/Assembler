@@ -1,6 +1,8 @@
 
 import re
 
+from regex import F
+
 
 class Mnemonic:
 
@@ -54,7 +56,8 @@ class Mnemonic:
             'X': 0b0001
         }
 
-    def parse_mnemonic(self, mnemonic):
+    def parse_mnemonic(self, mnemonic, lines: list = None, parse_index = 0):
+        print(mnemonic)
         mnemonic_action = mnemonic[0]
         m_len = len(mnemonic_action)
         if (m_len in [4, 6, 7]) and 'MOV' in mnemonic_action:
@@ -86,10 +89,14 @@ class Mnemonic:
             rd = self._ensure_bits(mnemonic[1].replace('R', ''), 4)
             rn = self._ensure_bits(mnemonic[2].replace('R', ''), 4)
             binary = f'{cond}{op}{rn}{rd}000000000000'
+        elif mnemonic_action[0:3] in ['LDM', 'STM']:
+            binary = '01010101001011111111111100010101' # TODO: implement
         elif op_code == 'B':
             if m_len == 2:
                 op = self._ensure_bits(self.b_op_codes.get(mnemonic_action[1:2]), 4)
-                if ':' in mnemonic[1]: pass # TODO: subrunine label
+                if ':' in mnemonic[1]:
+                    label_i = self._get_lable_line(lines, mnemonic)
+                    binary = f'{cond}{op}{self._ensure_bits(label_i - parse_index - 2, 24)}'
                 else:
                     rn = self._ensure_bits(mnemonic[1].replace('R', ''), 4)
                     binary = f'{cond}{op}00101111111111110001{rn}'
@@ -141,3 +148,6 @@ class Mnemonic:
     def _bits_to_hex(self, binary):
         binary_to_hex = [hex(int(b, 2)).replace('0x', '') for b in re.findall('....', binary)]
         return (''.join(re.findall('..', ''.join(binary_to_hex))), ''.join(re.findall('..', ''.join(binary_to_hex))[::-1]))
+
+    def _get_lable_line(self, lines, mnemonic):
+        return max(loc for loc, val in enumerate(lines) if mnemonic[1] in val)
