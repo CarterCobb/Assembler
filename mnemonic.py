@@ -27,8 +27,8 @@ class Mnemonic:
             'B': 0b1010,
             'LDR': 0b01000001,
             'STR': 0b01000000,
-            'LDM': 0b100010, # W1
-            # 'STM': 0b
+            'LDM': 0b100, # PUSW1
+            'STM': 0b100 # PUSW0
         }
         self.mov_large = {
             'MOVW': 0b00110000,
@@ -90,7 +90,11 @@ class Mnemonic:
             rn = self._ensure_bits(mnemonic[2].replace('R', ''), 4)
             binary = f'{cond}{op}{rn}{rd}000000000000'
         elif mnemonic_action[0:3] in ['LDM', 'STM']:
-            binary = '01010101001011111111111100010101' # TODO: implement
+            rn = self._ensure_bits(mnemonic[1].replace('R', ''), 4)
+            chunk = '00000'
+            if 'S' in mnemonic_action[0:3]: chunk[4] = '1'
+            # if ''
+            binary = f'{cond}{chunk}01011111111111100010101' # TODO: implement
         elif op_code == 'B':
             if m_len == 2:
                 op = self._ensure_bits(self.b_op_codes.get(mnemonic_action[1:2]), 4)
