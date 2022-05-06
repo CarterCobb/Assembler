@@ -1,7 +1,7 @@
 
+from posixpath import split
+from pprint import pprint
 import re
-
-from regex import F
 
 
 class Mnemonic:
@@ -88,13 +88,23 @@ class Mnemonic:
             op = self._ensure_bits(self.op_codes.get(mnemonic_action[0:3]), 8)
             rd = self._ensure_bits(mnemonic[1].replace('R', ''), 4)
             rn = self._ensure_bits(mnemonic[2].replace('R', ''), 4)
-            binary = f'{cond}{op}{rn}{rd}000000000000'
+            offest = '000000000000'
+            if len(mnemonic) in [4, 5]: offest = self._ensure_bits(int(mnemonic[3].replace('0x', ''), 16), 12)
+            binary = f'{cond}{op}{rn}{rd}{offest}'
         elif mnemonic_action[0:3] in ['LDM', 'STM']:
-            rn = self._ensure_bits(mnemonic[1].replace('R', ''), 4)
-            chunk = '00000'
-            if 'S' in mnemonic_action[0:3]: chunk[4] = '1'
-            # if ''
-            binary = f'{cond}{chunk}01011111111111100010101' # TODO: implement
+            rn = self._ensure_bits(re.sub('R|\!', '', mnemonic[1]), 4)
+            chunk = ['0'] * 5
+            if 'P' in mnemonic[0]: chunk[0] = '1' # pre/post
+            if 'U' in mnemonic[0]: chunk[1] = '1' # up/down
+            if '!' in mnemonic[1]: chunk[3] = '1' # writeback
+            if 'LDM' in mnemonic[0]: chunk[4] = '1' # set on to load
+            r_list = ['1'] * 16
+            if '-' in mnemonic[2]: 
+                split_r = [int(r.replace('R', '')) for r in mnemonic[2].split('-')]
+                small, big = split_r[0], split_r[1] + 1
+                for i in range(16): 
+                    if small <= i and i >= big: r_list[i] = '0' 
+            binary = f"{cond}100{''.join(chunk)}{rn}{''.join(r_list[::-1])}"
         elif op_code == 'B':
             if m_len == 2:
                 op = self._ensure_bits(self.b_op_codes.get(mnemonic_action[1:2]), 4)
