@@ -31,7 +31,7 @@ with open(path, 'r') as file:
     for line in [i for i in file.readlines() if i]:
         if line is not None and not line.isspace(): lines.append(re.sub('\,|\\n|\(|\)', '', line))
 
-parsed_mnemonics = [mnemonic_dictionary.parse_mnemonic(lines[i].split(' '), lines, i) for i in range(len(lines) - 1)]
+parsed_mnemonics = [mnemonic_dictionary.parse_mnemonic(lines[i].split(' '), lines, i) for i in range(len(lines))]
 
 encode = ''.join([h['encode'] for h in parsed_mnemonics])
 
