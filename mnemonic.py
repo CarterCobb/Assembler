@@ -57,7 +57,6 @@ class Mnemonic:
         }
 
     def parse_mnemonic(self, mnemonic, lines: list = None, parse_index = 0):
-        print(mnemonic)
         mnemonic_action = mnemonic[0]
         m_len = len(mnemonic_action)
         if (m_len in [4, 6, 7]) and 'MOV' in mnemonic_action:
@@ -81,6 +80,8 @@ class Mnemonic:
         op_code = 'B' if mnemonic_action[0] == 'B' else mnemonic_action[0:3]
         cond_code = mnemonic_action[-2:] if m_len in [5, 6] else 'AL'
         if op_code == 'B' and m_len == 3:
+            cond_code = mnemonic_action[-2:] if m_len in [3] else 'AL'
+        if op_code in ['STM', 'LDM'] and m_len == 5:
             cond_code = mnemonic_action[-2:] if m_len in [3] else 'AL'
         cond = self._ensure_bits(self.condition_codes[cond_code], 4)
         s = False
