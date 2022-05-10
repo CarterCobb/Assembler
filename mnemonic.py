@@ -92,6 +92,8 @@ class Mnemonic:
             offest = '000000000000'
             if len(mnemonic) in [4, 5]: offest = self._ensure_bits(int(mnemonic[3].replace('0x', ''), 16), 12)
             binary = f'{cond}{op}{rn}{rd}{offest}'
+            if mnemonic[1] == 'R7':
+                binary = f"{cond}010{'1' if 'P' in mnemonic[0] else '0' }0001{rn}{rd}{offest}"
         elif mnemonic_action[0:3] in ['LDM', 'STM']:
             rn = self._ensure_bits(re.sub('R|\!', '', mnemonic[1]), 4)
             chunk = ['0'] * 5
