@@ -10,10 +10,11 @@ class Compiler():
             for line in file.readlines():
                 lines.append(line.replace('[N_TIMES]', hex(
                     n)) if '[N_TIMES]' in line else line)
-        with open('__assembly__.txt', 'w') as file:
+        out_file = '__assembly__.txt'
+        with open(out_file, 'w') as file:
             file.writelines(lines)
         stdout_data = subprocess.run(
-            ['python', 'assembler.py'], universal_newlines=True, capture_output=True, input='__assembly__.txt')
+            ['python', 'assembler.py'], universal_newlines=True, capture_output=True, input=out_file)
         print(re.sub(r'\n+(?=\n)', '', stdout_data.stdout))
 
 
