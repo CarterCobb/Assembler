@@ -17,7 +17,6 @@ class Compiler():
             ['python', 'assembler.py'], universal_newlines=True, capture_output=True, input=out_file)
         print(re.sub(r'\n+(?=\n)', '', stdout_data.stdout))
 
-
 if __name__ == '__main__':
     path = input("Enter a path to a program file:\r\n-> ")
     lines = []
