@@ -13,7 +13,7 @@ A list of supported OpCodes is as follows:
 | SUB  | RSC  | ORR  | LDR  |
 | RSB  | TST  | MOV  | STR  |
 | ADD  | TEQ  | BIC  | MOVW |
-| MOVT | --   | --   | --   |
+| MOVT | BL   | BX   | --   |
 
 The assembler is capable of more. It follows dynamic rules to parse the commands.
 
